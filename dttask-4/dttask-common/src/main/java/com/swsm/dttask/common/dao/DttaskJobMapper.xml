@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swsm.dttask.common.dao.DttaskJobMapper">
+
+    <update id="updateStatus">
+        update t_dttask_job set status = #{status} where id = #{id}
+    </update>
+
+    <update id="updateStatusAndDttaskId">
+        update t_dttask_job set status = #{status}, dttask_id = #{dttaskId} where id = #{id}
+    </update>
+
+    <update id="historyAllJob">
+        insert into t_dttask_job_history select * from t_dttask_job where 1 = 1
+    </update>
+    <delete id="deleteAll">
+        delete from t_dttask_job;
+    </delete>
+
+</mapper>

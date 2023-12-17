@@ -1,0 +1,61 @@
+server:
+  port: 9088
+  servlet:
+    context-path: /
+  undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+    io-threads: 4
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+    worker-threads: 20
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 1024
+    # 是否分配的直接内存
+spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 指定时间区域类型 东8区时区 既北京时间
+    time-zone: GMT+8
+  mvc:
+    async:
+      request-timeout: 30000
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  swagger:
+    enable: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  main:
+    allow-circular-references: true
+  redis:
+    database: 6
+    host: 127.0.0.1
+    port: 6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/dttask-server?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&
+      nullCatalogMeansCurrent=true
+    username: root
+    password: admin123
+    hikari:
+      maximum-pool-size: 100 #最大连接数,默认值10.
+      minimum-idle: 20 #最小空闲连接，默认值10.
+      connection-timeout: 60000 #连接超时时间(毫秒),默认值30秒.
+      #空闲连接超时时间，默认值600000(10分钟),只有空闲连接数大于最大连接数且空闲时间超过该值，才会被释放
+      #如果大于等于 max-lifetime 且 max-lifetime>0,则会被重置为0.
+      idle-timeout: 600000
+      max-lifetime: 3000000 #连接最大存活时间,默认值30分钟.设置应该比mysql设置的超时时间短
+      connection-test-query: select 1 #连接测试查询
+    
+dttask:
+  server:
+    serverId: 1
+    serverInfo: 127.0.0.1:6789:1;127.0.0.1:6790:2;127.0.0.1:6791:3
+    readIdleSecondTime: 0
+    writeIdleSecondTime: 0
+    allIdleSecondTime: 10
+    

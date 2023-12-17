@@ -1,0 +1,5 @@
+/.idea/
+/dttask-common/dttask-common.iml
+/dttask-server/dttask-server.iml
+/dttask-common/target/
+/dttask-server/target/
